@@ -3,17 +3,58 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 import io
+import os
+import json
+import asyncio
+import random
 
 class BeauSkinModel:
     def __init__(self):
         try:
-            # Load all models
-            self.skin_type_model = tf.keras.models.load_model('model/weights/skintypes_detection_model.h5')
-            self.acne_model = tf.keras.models.load_model('model/weights/acne_grade_model2.h5')
-            self.chatbot_model = tf.keras.models.load_model('model/weights/chatbot_model.h5')
+            # Load responses dictionary and label encoder
+            print("Loading chatbot files...")
+            self.responses_dict = np.load('chatbot_responses.npy', allow_pickle=True).item()
+            self.label_encoder = np.load('chatbot_label_encoder.npy', allow_pickle=True)
+            
+            # Load weights
+            self.skin_type_model = tf.keras.models.load_model('skintypes_detection_model.h5')
+            self.acne_model = tf.keras.models.load_model('acne_grade_model2.h5')
             print("All models loaded successfully!")
+            
         except Exception as e:
             print(f"Error loading models: {str(e)}")
+            raise
+
+    def get_intent(self, text):
+        """Determine the intent of the input text"""
+        text = text.lower().strip()
+        
+        if 'hello' in text or 'hi' in text:
+            return 'greeting'
+        elif 'bye' in text or 'goodbye' in text:
+            return 'goodbye'
+        elif 'thank' in text:
+            return 'thank_you'
+        elif 'dry' in text:
+            return 'skin_treatment_dry'
+        elif 'oily' in text:
+            return 'skin_treatment_oily'
+        elif 'acne' in text:
+            return 'skin_treatment_acne'
+        elif 'normal' in text:
+            return 'skin_treatment_normal'
+        elif 'sunscreen' in text or 'sun' in text:
+            return 'sun_protection'
+        elif 'product' in text:
+            return 'product_recommendations'
+        elif 'allergy' in text or 'reaction' in text:
+            return 'allergic_reaction'
+        elif 'routine' in text or 'use' in text:
+            return 'product_usage'
+        elif 'type' in text:
+            return 'skin_type'
+        else:
+            return 'common_skin_issues'
 
     def preprocess_image(self, image, target_size=(128, 128)):
         """Preprocess image for prediction"""
@@ -68,13 +109,27 @@ class BeauSkinModel:
             return {"status": "error", "message": str(e)}
 
     async def get_chatbot_response(self, text):
+        """Get chatbot response based on input text"""
         try:
-            # Add your chatbot logic here
-            # This is a placeholder - adjust according to your chatbot model's requirements
-            response = self.chatbot_model.predict([text])
+            # Get intent
+            intent = self.get_intent(text)
+            
+            # Get responses for this intent
+            responses = self.responses_dict[intent]
+            
+            # Select random response
+            response = random.choice(responses)
+            
             return {
                 "status": "success",
-                "response": response
+                "response": str(response),
+                "intent": intent
             }
         except Exception as e:
-            return {"status": "error", "message": str(e)}
+            print(f"Chatbot error: {str(e)}")
+            return {
+                "status": "error",
+                "message": str(e)
+            }
+
+    
