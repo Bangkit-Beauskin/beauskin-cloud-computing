@@ -1,14 +1,15 @@
 # main.py
-from fastapi import FastAPI, File, UploadFile, Body
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-import os
-import uvicorn
+from pydantic import BaseModel
 from model import BeauSkinModel
+
+class ChatInput(BaseModel):
+    message: str
 
 app = FastAPI(title="BeauSkin API")
 
-# CORS setup
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -17,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize models
+print("Initializing BeauSkin model...")
 model_instance = BeauSkinModel()
 
 @app.get("/")
@@ -50,16 +51,17 @@ async def analyze(file: UploadFile = File(...)):
         )
 
 @app.post("/chat")
-async def chat(message: str = Body(..., embed=True)):
+async def chat(input_data: ChatInput):
     try:
-        result = await model_instance.get_chatbot_response(message)
+        result = await model_instance.get_chatbot_response(input_data.message)
         return result
-
     except Exception as e:
         return JSONResponse(
             status_code=500,
             content={"status": "error", "message": str(e)}
         )
 
+
 if __name__ == "__main__":
+    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
