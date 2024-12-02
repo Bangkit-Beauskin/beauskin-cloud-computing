@@ -1,32 +1,62 @@
 # model.py
-from pathlib import Path
 import tensorflow as tf
 import numpy as np
 from PIL import Image
 import io
 import os
 import json
+import string
 import asyncio
 import random
 from ultralytics import YOLO
 import cv2
 import base64
-
+from pathlib import Path
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from sklearn.preprocessing import LabelEncoder
 
 class BeauSkinModel:
     def __init__(self, models_dir: str):
         try:
             self.models_dir = Path(models_dir)
             
-            # Load responses dictionary and label encoder
-            print("Loading chatbot files...")
-            self.responses_dict = np.load(self.models_dir / 'chatbot_responses.npy', allow_pickle=True).item()
-            self.label_encoder = np.load(self.models_dir / 'chatbot_label_encoder.npy', allow_pickle=True)
-            
-            # Load all three models
+            # Load models
+            print("Loading models...")
             self.acne_model = tf.keras.models.load_model(self.models_dir / 'acne_grade_model.h5')
             self.skin_type_model = tf.keras.models.load_model(self.models_dir / 'skintypes_detection_model.h5')
             self.acne_types_model = YOLO(str(self.models_dir / 'best_model.pt'))
+            self.chatbot_model = tf.keras.models.load_model(self.models_dir / 'chatbot_model.h5')
+            
+            # Load and process chatbot data
+            print("Loading chatbot files...")
+            with open(self.models_dir / 'skin_treatment.json') as file:
+                self.data = json.load(file)
+            
+            # Prepare responses dictionary
+            self.responses = {}
+            inputs = []
+            tags = []
+            for intent in self.data['intents']:
+                self.responses[intent['tag']] = intent['responses']
+                for lines in intent['input']:
+                    inputs.append(lines)
+                    tags.append(intent['tag'])
+            
+            # Initialize tokenizer and fit on inputs
+            self.tokenizer = Tokenizer(num_words=2000)
+            # Clean inputs
+            cleaned_inputs = [self.clean_text(text) for text in inputs]
+            self.tokenizer.fit_on_texts(cleaned_inputs)
+            
+            # Initialize and fit label encoder
+            self.le = LabelEncoder()
+            self.le.fit(tags)
+            
+            # Get input shape from training data
+            train = self.tokenizer.texts_to_sequences(cleaned_inputs)
+            x_train = pad_sequences(train)
+            self.input_shape = x_train.shape[1]
             
             # Define fixed colors for YOLO labels
             self.label_colors = {
@@ -38,42 +68,48 @@ class BeauSkinModel:
                 'whiteheads': (255, 0, 255)   # Magenta
             }
             
-            print("All models loaded successfully!")
+            print("All models and data loaded successfully!")
             
         except Exception as e:
             print(f"Error loading models: {str(e)}")
             raise
 
-    def get_intent(self, text):
-        """Determine the intent of the input text"""
-        text = text.lower().strip()
-        
-        if 'hello' in text or 'hi' in text:
-            return 'greeting'
-        elif 'bye' in text or 'goodbye' in text:
-            return 'goodbye'
-        elif 'thank' in text:
-            return 'thank_you'
-        elif 'dry' in text:
-            return 'skin_treatment_dry'
-        elif 'oily' in text:
-            return 'skin_treatment_oily'
-        elif 'acne' in text:
-            return 'skin_treatment_acne'
-        elif 'normal' in text:
-            return 'skin_treatment_normal'
-        elif 'sunscreen' in text or 'sun' in text:
-            return 'sun_protection'
-        elif 'product' in text:
-            return 'product_recommendations'
-        elif 'allergy' in text or 'reaction' in text:
-            return 'allergic_reaction'
-        elif 'routine' in text or 'use' in text:
-            return 'product_usage'
-        elif 'type' in text:
-            return 'skin_type'
-        else:
-            return 'common_skin_issues'
+    def clean_text(self, text):
+        """Clean text by removing punctuation and converting to lowercase"""
+        text = ''.join([letter.lower() for letter in text if letter not in string.punctuation])
+        return text
+    
+    async def get_chatbot_response(self, text):
+        """Get chatbot response using the new model"""
+        try:
+            # Clean and preprocess input text
+            cleaned_text = self.clean_text(text)
+            texts_p = [cleaned_text]
+            
+            # Tokenize and pad input
+            prediction_input = self.tokenizer.texts_to_sequences(texts_p)
+            prediction_input = np.array(prediction_input).reshape(-1)
+            prediction_input = pad_sequences([prediction_input], self.input_shape)
+            
+            # Get prediction
+            output = self.chatbot_model.predict(prediction_input)
+            output = output.argmax()
+            
+            # Get response tag and random response
+            response_tag = self.le.inverse_transform([output])[0]
+            response = random.choice(self.responses[response_tag])
+            
+            return {
+                "status": "success",
+                "response": str(response),
+                "intent": response_tag
+            }
+        except Exception as e:
+            print(f"Chatbot error: {str(e)}")
+            return {
+                "status": "error",
+                "message": str(e)
+            }
 
     def preprocess_image(self, image, target_size=(128, 128)):
         """Preprocess image for model predictions"""
@@ -174,21 +210,3 @@ class BeauSkinModel:
         except Exception as e:
             return {"status": "error", "message": str(e)}
 
-    async def get_chatbot_response(self, text):
-        """Get chatbot response based on input text"""
-        try:
-            intent = self.get_intent(text)
-            responses = self.responses_dict[intent]
-            response = random.choice(responses)
-            
-            return {
-                "status": "success",
-                "response": str(response),
-                "intent": intent
-            }
-        except Exception as e:
-            print(f"Chatbot error: {str(e)}")
-            return {
-                "status": "error",
-                "message": str(e)
-            }
