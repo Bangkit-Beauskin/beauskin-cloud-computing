@@ -7,9 +7,10 @@ git clone https://github.com/Bangkit-Beauskin/beauskin-cloud-computing
 
 
 # ho to run project
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+pip install tensorflow
 python main.py
 
 deactivate
