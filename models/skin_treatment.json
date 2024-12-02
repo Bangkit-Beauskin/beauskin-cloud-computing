@@ -1,0 +1,368 @@
+{
+    "intents": [
+        {
+            "tag": "greeting",
+            "input": [
+                "Hi",
+                "Hello",
+                "Hey",
+                "Good morning",
+                "Good evening",
+                "Hi there",
+                "Hello there",
+                "Greetings",
+                "What's up?",
+                "How's it going?",
+                "How are you?"
+            ],
+            "responses": [
+                "Hello! How can I assist you with your skincare today?",
+                "Hi there! How can I help with your skincare routine?",
+                "Hey! What skincare help do you need today?",
+                "Good to see you! What skincare questions do you have?",
+                "Hello! How can I make your skincare routine better today?"
+            ]
+        },
+        {
+            "tag": "common_skin_issues",
+            "input": [
+                "What are common skin issues?",
+                "What are the most common skin problems?",
+                "What issues do people usually have with their skin?",
+                "What skin concerns should I be aware of?",
+                "What are common problems with skin care?"
+            ],
+            "responses": [
+                "Some common skin issues include acne, dry skin, oily skin, hyperpigmentation, and signs of aging like wrinkles and fine lines.",
+                "Skin problems can range from acne and dryness to oily skin, enlarged pores, and redness. It's important to understand your specific skin type to address these issues effectively.",
+                "The most common skin concerns are acne, dry or flaky skin, excess oil, uneven skin tone, and sensitivity. Knowing how to tailor your skincare routine can help manage these issues.",
+                "Hyperpigmentation, sun damage, and dehydration are also frequent concerns. Make sure to use sun protection and hydrating products to minimize these problems."
+            ]
+        },
+
+        {
+            "tag": "skin_type",
+            "input": [
+                "How do I know my skin type?",
+                "What is my skin type?",
+                "How to determine my skin type?",
+                "What type of skin do I have?",
+                "How can I tell my skin type?",
+                "How do I find out if I have oily or dry skin?",
+                "Tips for finding my skin type"
+            ],
+            "responses": [
+                "To determine your skin type, wash your face with a gentle cleanser, wait for about an hour without applying any products, then observe your skin. If it feels tight or flaky, you have dry skin. If it’s shiny all over, you have oily skin. If only your T-zone (forehead, nose, chin) is shiny, you likely have combination skin. If it feels comfortable and balanced, you have normal skin. For an easier way, try using the face scan analysis feature in our Beauskin app. It can detect your skin type and provide insights about acne concerns.",
+                "A simple test: after cleansing, if your skin is oily in the T-zone but normal or dry elsewhere, you have combination skin. Use a blotting sheet to check for oiliness. For an easier way, try using the face scan analysis feature in our Beauskin app. It can detect your skin type and provide insights about acne concerns."
+            ]
+        },
+        {
+            "tag": "skin_treatment_dry",
+            "input": [
+                "What can I do for dry skin?",
+                "I have dry skin, what treatment should I use?",
+                "How to treat dry skin?",
+                "Best routine for dry skin",
+                "Dry skin solutions",
+                "Dry skin remedies",
+                "What ingredients are good for dry skin?",
+                "Why is my skin so dry?",
+                "How can I keep my skin hydrated throughout the day?",
+                "What lifestyle changes help with dry skin?"
+            ],
+            "responses": [
+                "To care for dry skin, focus on maintaining hydration and protecting your skin barrier. Use a gentle cleanser that won’t strip your skin of natural oils, and apply moisturizer immediately after washing to lock in moisture. Avoid using very hot water during showers or face washing, as it can worsen dryness. If you’re unsure about the best routine for your skin, consider consulting a skincare professional for personalized advice.",
+                "Managing dry skin involves regular hydration and protection. Incorporate moisturizing products into your daily routine and avoid using harsh products that might irritate or dry out your skin further. Adding steps like using a humidifier in your living space can also help maintain skin moisture, especially in dry climates or during colder months. For a more tailored solution, speaking with a dermatologist is recommended.",
+                "Treating dry skin requires a consistent approach to hydration and care. Establish a skincare routine that includes gentle cleansing, moisturizing, and protecting your skin from environmental factors like wind and cold weather. Drinking enough water and ensuring a balanced diet can also support skin health from within. For further advice, reach out to a skincare expert who can guide you based on your specific needs."
+            ]
+        },
+
+        {
+            "tag": "skin_treatment_oily",
+            "input": [
+                "What can I do for oily skin?",
+                "I have oily skin, what treatment should I use?",
+                "How to treat oily skin?",
+                "Best routine for oily skin",
+                "How do I control oily skin?",
+                "Tips for oily skin care",
+                "What should I avoid with oily skin?",
+                "Why is my skin so oily?",
+                "How can I prevent breakouts with oily skin?",
+                "Does diet affect oily skin?"
+            ],
+            "responses": [
+                "For oily skin, start with a gentle, foaming cleanser that effectively removes excess oil without causing dryness. Follow up with a lightweight toner to balance oil production, and always use a non-comedogenic moisturizer to keep your skin hydrated without clogging pores. Avoid using very harsh products that can strip your skin, as this can cause your skin to produce even more oil.",
+                "To manage oily skin, incorporate products that contain salicylic acid or benzoyl peroxide, as these ingredients can help keep pores clear and reduce excess sebum. Make sure to use an oil-free sunscreen daily, as sun damage can worsen oiliness. If you're unsure about the right routine, consulting a dermatologist can help you address specific concerns.",
+                "Taking care of oily skin requires a consistent approach. Stick to a skincare routine with oil-control products and avoid over-washing your face, which can lead to increased oil production. Using blotting papers or mattifying powders during the day can also help reduce shine. For personalized advice, reach out to a skincare expert."
+            ]
+        },
+
+        {
+            "tag": "skin_treatment_normal",
+            "input": [
+                "What can I do for normal skin?",
+                "I have normal skin, what treatment should I use?",
+                "How to maintain normal skin?",
+                "Best skincare for normal skin",
+                "Normal skin routine",
+                "How to take care of normal skin?",
+                "How can I keep my skin balanced?",
+                "What products are good for normal skin?",
+                "How often should I exfoliate with normal skin?",
+                "Does normal skin need special care?"
+            ],
+            "responses": [
+                "For normal skin, maintain a simple and consistent skincare routine. Start with a gentle cleanser to remove impurities, follow with a hydrating serum, and finish with a lightweight moisturizer. Always apply sunscreen in the morning to protect your skin from UV damage.",
+                "To keep normal skin healthy, consider using antioxidant-rich products like vitamin C serums to protect against environmental stressors. Incorporate a mild exfoliator once or twice a week to maintain smooth texture and prevent buildup. For additional hydration, you can use a nourishing mask weekly.",
+                "Taking care of normal skin involves protecting its natural balance. Avoid overloading your routine with too many active ingredients, and instead focus on maintaining hydration and protecting your skin barrier. For tailored skincare tips, consulting with a dermatologist can be helpful."
+            ]
+        },
+        {
+            "tag": "skincare_routine",
+            "input": [
+                "What is the correct order of skincare?",
+                "How do I layer my skincare products?",
+                "What steps should I follow in my skincare routine?",
+                "Skincare routine for beginners",
+                "What comes first in skincare?",
+                "How do I build a skincare routine?",
+                "Should I use serum or moisturizer first?",
+                "What is the best skincare routine?"
+            ],
+            "responses": [
+                "A basic skincare routine typically involves three main steps: cleansing, treating, and moisturizing. Start with a gentle cleanser to remove dirt and oil. Next, apply treatments like serums or spot treatments to address specific skin concerns. Finally, use a moisturizer to lock in hydration and protect your skin barrier. In the morning, don’t forget to finish with sunscreen to protect against UV damage. For more personalized guidance, consult with a skincare professional.",
+                "The correct order of skincare is crucial for product effectiveness. Begin with cleansing your face to create a clean base. Apply toner, if you use one, to prep your skin for treatments. Follow with serums or active treatments, then a moisturizer. In the morning, end with sunscreen as the final step. At night, you can add an eye cream or facial oil if needed. For further advice tailored to your skin type, consider speaking with a dermatologist.",
+                "Building a skincare routine doesn’t have to be complicated. Start with a cleanser, then add a toner if desired. Use serums to target concerns like hydration or blemishes, followed by a moisturizer to keep your skin hydrated. For daytime, always end with sunscreen. If you’re new to skincare, keep it simple and gradually introduce new products to see how your skin responds. For more detailed recommendations, consulting a skincare expert is a great option."
+            ]
+        },
+        {
+
+            "tag": "skin_treatment_acne_mild",
+            "input": [
+                "How to treat mild acne?",
+                "Best products for mild acne",
+                "What helps with mild acne?",
+                "Skincare for mild acne-prone skin",
+                "How to reduce mild acne?",
+                "Best mild acne treatments",
+                "How can I prevent mild acne breakouts?"
+            ],
+            "responses": [
+                "For mild acne, maintain a consistent skincare routine with gentle cleansing and adequate hydration. Avoid touching your face frequently to minimize bacteria transfer.",
+                "Ensure you're removing makeup and sunscreen thoroughly at the end of the day. Manage stress levels and get sufficient sleep to support skin health.",
+                "Adopt a balanced diet and drink plenty of water to keep your skin in optimal condition."
+            ]
+        },
+        {
+            "tag": "skin_treatment_acne_moderate",
+            "input": [
+                "How to treat moderate acne?",
+                "Best products for moderate acne",
+                "What helps with moderate acne?",
+                "Skincare for moderate acne-prone skin",
+                "How to reduce moderate acne?",
+                "Best moderate acne treatments",
+                "How can I prevent moderate acne breakouts?"
+            ],
+            "responses": [
+                "For moderate acne, establish a routine that focuses on gentle cleansing and avoiding harsh scrubs. Minimize stress and stick to a healthy lifestyle to support overall skin health.",
+                "Avoid popping pimples, as it can worsen inflammation or lead to scarring. Practice good hygiene, such as changing pillowcases regularly and keeping your hair clean.",
+                "If breakouts persist, consult a dermatologist for advice tailored to your condition, including treatments like professional extractions or light therapy."
+            ]
+        },
+        {
+            "tag": "skin_treatment_acne_severe",
+            "input": [
+                "How to treat severe acne?",
+                "Best products for severe acne",
+                "What helps with severe acne?",
+                "Skincare for severe acne-prone skin",
+                "How to reduce severe acne?",
+                "Best severe acne treatments",
+                "How can I prevent severe acne breakouts?"
+            ],
+            "responses": [
+                "For severe acne, prioritize visiting a dermatologist for professional guidance. Treatments may include oral medications or specialized procedures.",
+                "Focus on a consistent, gentle skincare routine to avoid further irritation. Ensure your lifestyle includes a balanced diet, proper hydration, and regular physical activity.",
+                "Maintain good hygiene practices and seek support for managing stress, as it can exacerbate severe acne."
+            ]
+        },
+                {
+            "tag": "skin_treatment_blackheads",
+            "input": [
+                "How to treat blackheads?",
+                "What helps with blackheads?",
+                "Best products for blackheads",
+                "How to reduce blackheads?",
+                "How to prevent blackheads?"
+            ],
+            "responses": [
+                "To manage blackheads, cleanse your skin gently and avoid squeezing them to prevent scarring. Focus on keeping pores clean and maintaining a balanced skincare routine. For an easier way, try using the face scan analysis feature in our Beauskin app. It can detect your skin type and provide insights about blackhead concerns."
+            ]
+        },
+        {
+            "tag": "skin_treatment_dark_spot",
+            "input": [
+                "How to treat dark spots?",
+                "What helps with dark spots?",
+                "Best products for dark spots",
+                "How to reduce dark spots?",
+                "How to prevent dark spots?"
+            ],
+            "responses": [
+                "Dark spots can be addressed by protecting your skin from sun exposure and adopting a routine that supports skin renewal. Consistent hydration and stress management are also helpful. For an easier way, try using the face scan analysis feature in our Beauskin app. It can detect your skin type and provide insights about dark spot concerns."
+            ]
+        },
+        {
+            "tag": "skin_treatment_nodules",
+            "input": [
+                "How to treat nodules?",
+                "What helps with nodules?",
+                "Best products for nodules",
+                "How to reduce nodules?",
+                "How to prevent nodules?"
+            ],
+            "responses": [
+                "Nodules often require a professional approach. A healthy lifestyle and avoiding the temptation to touch or pick at your skin are key. For an easier way, try using the face scan analysis feature in our Beauskin app. It can detect your skin type and provide insights about nodules."
+            ]
+        },
+        {
+            "tag": "skin_treatment_papules",
+            "input": [
+                "How to treat papules?",
+                "What helps with papules?",
+                "Best products for papules",
+                "How to reduce papules?",
+                "How to prevent papules?"
+            ],
+            "responses": [
+                "Papules can be managed by keeping your skincare routine gentle and consistent. Reduce stress and stay hydrated for better skin health. For an easier way, try using the face scan analysis feature in our Beauskin app. It can detect your skin type and provide insights about papules."
+            ]
+        },
+        {
+            "tag": "skin_treatment_pustules",
+            "input": [
+                "How to treat pustules?",
+                "What helps with pustules?",
+                "Best products for pustules",
+                "How to reduce pustules?",
+                "How to prevent pustules?"
+            ],
+            "responses": [
+                "For pustules, a calm and consistent skincare routine is essential. Avoid popping or squeezing them to prevent scarring. For an easier way, try using the face scan analysis feature in our Beauskin app. It can detect your skin type and provide insights about pustules."
+            ]
+        },
+        {
+            "tag": "skin_treatment_whiteheads",
+            "input": [
+                "How to treat whiteheads?",
+                "What helps with whiteheads?",
+                "Best products for whiteheads",
+                "How to reduce whiteheads?",
+                "How to prevent whiteheads?"
+            ],
+            "responses": [
+                "Whiteheads can be managed by cleansing your skin regularly and keeping your pores clean. Focus on maintaining a balanced routine and avoiding stress. For an easier way, try using the face scan analysis feature in our Beauskin app. It can detect your skin type and provide insights about whiteheads."
+            ]
+        },
+        {
+            "tag": "sun_protection",
+            "input": [
+                "Do I need sunscreen?",
+                "Why should I use sunscreen?",
+                "What SPF should I use?",
+                "Importance of sunscreen",
+                "Should I wear sunscreen every day?",
+                "Does sunscreen help prevent aging?"
+            ],
+            "responses": [
+                "Yes, sunscreen is essential to protect your skin from harmful UV rays, which can cause premature aging, sunburn, and skin cancer. Always use broad-spectrum sunscreen with at least SPF 30.",
+                "Apply sunscreen daily, even when it’s cloudy, as UV rays can penetrate through clouds. Reapply every two hours when outdoors.",
+                "Using sunscreen regularly helps prevent dark spots, hyperpigmentation, and fine lines caused by sun exposure."
+            ]
+        },
+        {
+            "tag": "product_usage",
+            "input": [
+                "How should I apply my skincare products?",
+                "What order should I use skincare products?",
+                "Can you suggest an order of applying skincare?",
+                "How to layer skincare?",
+                "Skincare steps order",
+                "Which product goes first?"
+            ],
+            "responses": [
+                "A general rule is to apply skincare products from thinnest to thickest consistency: cleanser, toner, serum, moisturizer, and sunscreen. At night, replace sunscreen with a night cream or treatment product.",
+                "The basic order: Cleanser → Toner (optional) → Serum → Eye cream (optional) → Moisturizer → Sunscreen (morning only).",
+                "For nighttime, include a retinol or hydrating mask after moisturizing if desired. Be sure to layer serums based on water-to-oil consistency."
+            ]
+        },
+        {
+            "tag": "allergic_reaction",
+            "input": [
+                "What if I have an allergic reaction to a product?",
+                "I think I am allergic to a skincare product, what should I do?",
+                "My skin is reacting badly to a product, what should I do?",
+                "Allergic reaction from skincare",
+                "Skin irritation help",
+                "What to do if my skin reacts?",
+                "How do I know if I’m allergic to a product?",
+                "What are the signs of an allergic reaction to skincare?",
+                "Why does my skin feel itchy after using a product?",
+                "What should I avoid if I have sensitive skin?"
+            ],
+            "responses": [
+                "If you experience redness, swelling, itching, or irritation after using a product, stop using it immediately. Rinse your face with cool water to remove any residue, and apply a cold compress to soothe the area. Avoid applying any additional products until your skin has calmed. For further assistance, consider consulting a dermatologist.",
+                "In case of an allergic reaction, use a soothing cream or gel containing ingredients like aloe vera or colloidal oatmeal to help calm the skin. If the reaction worsens or doesn’t improve within a few days, seek medical advice promptly. A skincare professional can provide guidance tailored to your condition.",
+                "To prevent future reactions, always patch test new products by applying a small amount to an inconspicuous area of your skin and monitoring it for 24–48 hours. If you’re unsure about a product or have a history of sensitive skin, it’s best to consult with a dermatologist before use."
+            ]
+        },
+        {
+          "tag": "skin_treatment_acne",
+          "input": [
+            "I have acne",
+            "How to manage acne?",
+            "What should I do for acne?",
+            "Tips to treat acne",
+            "Skincare routine for acne"
+          ],
+          "responses": [
+            "Managing acne requires consistency and care. Start with a gentle skincare routine tailored to your skin type. Wash your face twice a day, avoid touching your face frequently, and stay hydrated. A healthy diet and regular exercise can also help balance your skin. For a more personalized approach, try the face scan analysis feature in our Beauskin app. It provides specific insights about your acne and recommendations to address your concerns effectively."
+          ]
+        },
+
+        {
+            "tag": "thank_you",
+            "input": [
+                "Thank you",
+                "Thanks",
+                "I appreciate it",
+                "Thank you for your help",
+                "Thanks a lot",
+                "Much appreciated"
+            ],
+            "responses": [
+                "You're welcome! Let me know if you need further help with your skincare.",
+                "Glad I could help! Feel free to reach out if you have more skincare questions.",
+                "My pleasure! I'm here if you need any more advice."
+            ]
+        },
+        {
+            "tag": "goodbye",
+            "input": [
+                "Goodbye",
+                "See you",
+                "Bye",
+                "Take care",
+                "Talk to you later",
+                "See you soon"
+            ],
+            "responses": [
+                "Goodbye! Take care of your skin!",
+                "See you! Don't forget to keep your skincare routine up!",
+                "Bye! Remember to stay hydrated and use your SPF!"
+            ]
+        }
+    ]
+}
