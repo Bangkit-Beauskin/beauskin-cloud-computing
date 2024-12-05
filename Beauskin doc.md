@@ -45,7 +45,7 @@ models/
 
 Start the API server:
 ```bash
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+python main.py
 ```
 
 The API will be available at `http://localhost:8000`
