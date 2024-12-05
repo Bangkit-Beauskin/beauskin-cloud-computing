@@ -50,7 +50,7 @@ beauskin-cloud-computing/
 1. Make sure your virtual environment is activated
 2. Start the FastAPI server:
 ```bash
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+python main.py
 ```
 3. Access the API:
    - API Documentation: `http://localhost:8000/docs`
