@@ -42,6 +42,9 @@ cd beauskin-cloud-computing
 
 ![alt text](image-2.png)
 
+- open file main.py change code bucket_name to your bucket name
+  ![alt text](image-4.png)
+
 #### Service Account
 
 - search Service Accounts
