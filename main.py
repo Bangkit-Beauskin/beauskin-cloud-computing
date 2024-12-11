@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+from google.cloud import storage
 from typing import List
 from model import BeauSkinModel
 import os
@@ -16,6 +17,8 @@ UPLOADS_DIR = BASE_DIR / "uploads"
 # Create directories if they don't exist
 MODELS_DIR.mkdir(exist_ok=True)
 UPLOADS_DIR.mkdir(exist_ok=True)
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/secrets/service-account"
+
 
 class ChatInput(BaseModel):
     message: str
@@ -26,6 +29,10 @@ class MultiImageAnalysis(BaseModel):
     right_image: str
 
 app = FastAPI(title="BeauSkin API")
+storage_client = storage.Client()
+
+bucket_name = "beauskin-main-bucket"
+bucket = storage_client.bucket(bucket_name)
 
 # Mount the uploads directory for static file serving
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
@@ -84,7 +91,7 @@ async def analyze(
             original_filename = file.filename
             file_path = position_dir / original_filename
             
-            # Save uploaded file
+            # Save uploaded file locally
             with open(file_path, "wb") as buffer:
                 content = await file.read()
                 buffer.write(content)
@@ -94,12 +101,20 @@ async def analyze(
             result = await model_instance.analyze_image(str(file_path))
             
             if result["status"] == "success":
-                # Update paths to reflect the correct directory structure
-                original_url = f"/uploads/{position}/{original_filename}"
-                annotated_url = f"/uploads/{position}/annotated_{original_filename}"
+                # Save annotated image to GCS
+                annotated_filename = f"annotated_{original_filename}"
+                annotated_file_path = position_dir / annotated_filename
+                annotated_image_url = f"/uploads/{position}/{annotated_filename}"
+
+                # Upload annotated image to GCS
+                blob = bucket.blob(f"{position}/{annotated_filename}")
+                with open(annotated_file_path, "rb") as annotated_image_file:
+                    blob.upload_from_file(annotated_image_file)
                 
-                result["file_url"] = original_url
-                result["annotated_image_path"] = annotated_url
+                # Update result with the GCS URL for the annotated image
+                result["file_url"] = f"/uploads/{position}/{original_filename}"
+                result["annotated_image_path"] = f"https://storage.googleapis.com/{bucket_name}/{position}/{annotated_filename}"
+                
                 results[position] = result
             else:
                 return JSONResponse(
@@ -128,12 +143,12 @@ async def analyze(
         }
         
         return combined_result
-        
     except Exception as e:
         return JSONResponse(
             status_code=500,
             content={"status": "error", "message": str(e)}
         )
+
 
 @app.post("/chat")
 async def chat(input_data: ChatInput):
@@ -148,4 +163,4 @@ async def chat(input_data: ChatInput):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="localhost", port=8000)
